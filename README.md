@@ -1,47 +1,35 @@
-# flight-delay-prediction
-An end-to-end Flight Delay Prediction System using Python, SQL, XGBoost, and Streamlit to analyze flight data and predict the probability of flight delays.
 # ✈️ Flight Delay Prediction System
 
-An end-to-end **Flight Delay Prediction System** built using Python, SQL, Machine Learning, XGBoost, and Streamlit. The project analyzes historical flight data, performs data exploration and SQL-based analysis, trains machine learning models, and provides an interactive web application for predicting flight delays.
+An end-to-end **Flight Delay Prediction System** built using **Python, SQL, XGBoost, and Streamlit** to analyze historical flight data and predict the probability of flight delays.
 
-## 📌 Project Overview
+## 📌 Overview
 
-Flight delays are a common problem in the aviation industry and can affect passengers, airlines, airport operations, and overall travel efficiency.
+This project follows a complete machine learning workflow:
 
-This project uses historical flight data to develop a machine learning classification system that predicts whether a flight is likely to be **Delayed** or **Not Delayed**.
+**Data Cleaning → EDA → SQL Analysis → Feature Engineering → Model Training → Model Evaluation → Threshold Tuning → Streamlit Deployment**
 
-The project covers the complete machine learning workflow:
+The system predicts whether a flight is likely to be:
 
-**Data → Cleaning → EDA → SQL Analysis → Feature Engineering → Model Training → Model Evaluation → Threshold Tuning → Streamlit Application**
+* 🔴 **Delayed**
+* 🟢 **Not Delayed**
 
-## 🎯 Objectives
+The application also displays the estimated **delay probability** and the model's **55% decision threshold**.
 
-* Analyze historical flight data.
-* Clean and prepare the dataset for machine learning.
-* Perform exploratory data analysis (EDA).
-* Use SQL to analyze flight-delay patterns.
-* Identify important factors used by the prediction model.
-* Train and compare multiple classification algorithms.
-* Handle class imbalance in the target variable.
-* Tune the prediction threshold.
-* Build an interactive Streamlit application.
-* Display flight-delay probability and prediction results.
+---
 
-## 🛠️ Technologies Used
+## 🛠️ Technologies
 
-| Technology       | Purpose                              |
-| ---------------- | ------------------------------------ |
-| Python           | Data processing and machine learning |
-| Pandas           | Data manipulation and analysis       |
-| NumPy            | Numerical operations                 |
-| Scikit-learn     | Machine learning and evaluation      |
-| XGBoost          | Final classification model           |
-| SQL / SQLite     | Flight data analysis                 |
-| Matplotlib       | Data visualization                   |
-| Seaborn          | Exploratory data visualization       |
-| Streamlit        | Interactive web application          |
-| Joblib           | Saving and loading trained models    |
-| Jupyter Notebook | Data analysis and experimentation    |
+* **Python**
+* **Pandas & NumPy**
+* **Scikit-learn**
+* **XGBoost**
+* **SQL / SQLite**
+* **Matplotlib & Seaborn**
+* **Streamlit**
+* **Jupyter Notebook**
+* **Git & GitHub**
+
+---
 
 ## 📂 Project Structure
 
@@ -53,72 +41,55 @@ flight-delay-prediction/
 │   └── predict.py
 │
 ├── data/
-│   ├── cleaned_flights.csv
-│   ├── flights_sample.csv
-│   ├── flights.db
 │   ├── airline_delay_analysis.csv
+│   ├── cleaned_flights.csv
+│   ├── flights.db
+│   ├── flights_sample.csv
 │   ├── hour_delay_analysis.csv
 │   ├── month_delay_analysis.csv
 │   └── route_delay_analysis.csv
 │
 ├── models/
+│   ├── category_mappings.pkl
 │   ├── flight_delay_xgboost.pkl
-│   ├── threshold.pkl
-│   └── category_mappings.pkl
+│   └── threshold.pkl
 │
 ├── notebooks/
 │   ├── 01_data_cleaning_eda.ipynb
 │   ├── 02_sql_analysis.ipynb
 │   └── 03_model_training.ipynb
 │
-├── sql/
+├── screenshots/
+│   ├── 01_main_application.png
+│   ├── 02_delayed_prediction.png
+│   ├── 03_prediction.png
+│   └── 04_early_morning.png
 │
 ├── run_app.sh
-├── README.md
-└── .gitignore
+├── .gitignore
+└── README.md
 ```
 
-## 🔍 Data Cleaning & EDA
+---
 
-The first stage of the project focused on understanding and preparing the flight dataset.
+## 🔍 Data Analysis
 
-The process included:
+The project includes:
 
-* Loading the flight dataset.
-* Inspecting the dataset structure.
-* Checking missing values.
-* Identifying relevant features.
-* Cleaning and preparing data for analysis.
-* Creating the target variable `DELAYED`.
-* Exploring flight-delay patterns.
-* Analyzing delays by airline, month, hour, and route.
-* Preparing the cleaned dataset for machine learning.
+* Data cleaning and preprocessing
+* Missing-value analysis
+* Exploratory Data Analysis
+* Airline delay analysis
+* Monthly delay analysis
+* Hourly delay analysis
+* Route-level delay analysis
+* SQLite-based SQL analysis
 
-## 🗄️ SQL Analysis
-
-SQLite was used to perform structured analysis of the flight data.
-
-The SQL analysis was used to investigate questions such as:
-
-* Which airlines have more delayed flights?
-* How do delays vary by departure hour?
-* How do delays vary by month?
-* Which routes experience more delays?
-* What is the relationship between flight counts and delays?
-
-The SQL results were exported into analysis files for further interpretation and visualization.
+---
 
 ## 🤖 Machine Learning
 
-The target variable is:
-
-```text
-DELAYED
-0 → Not Delayed
-1 → Delayed
-```
-
-The following classification models were trained and evaluated:
+Several classification models were evaluated, including:
 
 * Logistic Regression
 * Random Forest
@@ -126,70 +97,76 @@ The following classification models were trained and evaluated:
 * Balanced XGBoost
 * Tuned XGBoost
 
+The final model uses **XGBoost** with class-imbalance handling.
+
+The model uses:
+
+* Airline
+* Origin Airport
+* Destination Airport
+* Month
+* Day
+* Day of Week
+* Departure Hour
+* Scheduled Time
+* Distance
+* Weekend Indicator
+
 ### Class Imbalance
 
-The dataset contains significantly more non-delayed flights than delayed flights.
+The dataset contains more non-delayed flights than delayed flights.
 
-To address this imbalance, the final XGBoost model used:
+XGBoost was configured with:
 
 ```text
 scale_pos_weight = 4.4187
 ```
 
-This gives greater importance to the minority delayed-flight class during model training.
+to give greater importance to the delayed-flight class.
 
-## 🎚️ Threshold Tuning
+---
 
-Instead of relying only on the default probability threshold of 0.50, different thresholds were evaluated.
+## 🎚️ Prediction Threshold
 
-The tested thresholds ranged from **0.20 to 0.60**.
+The classification threshold was tuned using multiple probability thresholds.
 
-Based on the tested values, a threshold of **0.55** produced the highest F1-score.
-
-The final application therefore uses:
+The selected threshold is:
 
 ```text
-Decision Threshold = 55%
+55%
 ```
 
-If the predicted delay probability is at least 55%, the application classifies the flight as **Delayed**.
+Therefore:
 
-## 📊 Final Model Performance
+```text
+Delay Probability >= 55%
+        ↓
+     DELAYED
 
-The final Balanced XGBoost model with the selected 55% prediction threshold produced the following test-set results:
+Delay Probability < 55%
+        ↓
+   NOT DELAYED
+```
 
-| Metric    | Result |
-| --------- | -----: |
-| Accuracy  | 71.56% |
-| Precision | 33.70% |
-| Recall    | 55.96% |
-| F1 Score  | 42.07% |
-| ROC-AUC   | 71.75% |
+---
 
-These metrics are calculated on the project's test dataset.
+## 📊 Model Performance
 
-## ⭐ Model Feature Importance
+Final test-set performance:
 
-The XGBoost model used the following features:
+| Metric    |      Score |
+| --------- | ---------: |
+| Accuracy  | **71.56%** |
+| Precision | **33.70%** |
+| Recall    | **55.96%** |
+| F1 Score  | **42.07%** |
+| ROC-AUC   | **71.75%** |
 
-* Departure Hour
-* Month
-* Airline
-* Day
-* Day of Week
-* Origin Airport
-* Distance
-* Destination Airport
-* Scheduled Time
-* Weekend Indicator
-
-The model's feature-importance values indicate which features contributed more strongly to its predictions. They should not be interpreted as proof that a feature directly causes flight delays.
+---
 
 ## 🌐 Streamlit Application
 
-The project includes an interactive Streamlit web application.
-
-The user can enter:
+The application allows users to enter:
 
 * Airline code
 * Origin airport
@@ -199,20 +176,17 @@ The user can enter:
 * Day of week
 * Departure hour
 * Scheduled time
-* Flight distance
+* Distance
 * Weekend indicator
 
-The application then provides:
+The application displays:
 
-* Predicted flight status
+* Flight delay prediction
 * Delay probability
-* Risk information
+* Risk level
 * Decision threshold
-* Model performance information
 
-### Example Prediction
-
-Example input:
+### Example
 
 ```text
 Airline: DL
@@ -222,12 +196,12 @@ Month: 1
 Day: 3
 Day of Week: 6
 Departure Hour: 10
-Scheduled Time: 130 minutes
-Distance: 760 miles
+Scheduled Time: 130
+Distance: 760
 Weekend: Yes
 ```
 
-Example output:
+Example result:
 
 ```text
 Prediction: DELAYED
@@ -235,136 +209,92 @@ Delay Probability: 61.09%
 Decision Threshold: 55%
 ```
 
-## 🔄 Project Workflow
+---
 
-```text
-Historical Flight Data
-        ↓
-Data Cleaning
-        ↓
-Exploratory Data Analysis
-        ↓
-SQL Analysis
-        ↓
-Feature Engineering
-        ↓
-Train/Test Split
-        ↓
-Model Training
-        ↓
-Model Comparison
-        ↓
-Class Imbalance Handling
-        ↓
-Threshold Tuning
-        ↓
-Final XGBoost Model
-        ↓
-Model Saving
-        ↓
-Streamlit Application
-        ↓
-Flight Delay Prediction
-```
+## 📸 Screenshots
 
-## ▶️ How to Run the Project
+### Main Application
 
-### 1. Clone the repository
+![Main Application](screenshots/01_main_application.png)
+
+### Delayed Prediction
+
+![Delayed Prediction](screenshots/02_delayed_prediction.png)
+
+### Prediction Result
+
+![Prediction Result](screenshots/03_prediction.png)
+
+### Early Morning Prediction
+
+![Early Morning Prediction](screenshots/04_early_morning.png)
+
+---
+
+## ▶️ Run the Project
+
+Clone the repository:
 
 ```bash
-git clone https://github.com/YOUR-USERNAME/flight-delay-prediction.git
-```
-
-### 2. Open the project
-
-```bash
+git clone https://github.com/kelamsankar/flight-delay-prediction.git
 cd flight-delay-prediction
 ```
 
-### 3. Install required packages
+Install dependencies:
 
 ```bash
 pip install pandas numpy scikit-learn xgboost streamlit joblib matplotlib seaborn
 ```
 
-### 4. Run the Streamlit application
+Run the application:
 
 ```bash
 python3 -m streamlit run app/app.py
 ```
 
-Alternatively, if `run_app.sh` is executable:
+Or:
 
 ```bash
 ./run_app.sh
 ```
 
-The application will open in your browser.
+---
 
 ## 📓 Notebooks
 
-The project contains three main notebooks:
-
 ### `01_data_cleaning_eda.ipynb`
 
-Contains data cleaning, preparation, and exploratory data analysis.
+Data cleaning, preprocessing, and exploratory data analysis.
 
 ### `02_sql_analysis.ipynb`
 
-Contains SQLite-based queries and analysis of flight-delay patterns.
+SQL/SQLite analysis of airline, hourly, monthly, and route-level delays.
 
 ### `03_model_training.ipynb`
 
-Contains model training, evaluation, class-imbalance handling, threshold tuning, and model selection.
+Model training, evaluation, class-imbalance handling, threshold tuning, and model saving.
 
-## 💾 Saved Models
-
-The trained model and supporting files are stored in the `models/` directory.
-
-* `flight_delay_xgboost.pkl` — trained XGBoost model
-* `threshold.pkl` — selected prediction threshold
-* `category_mappings.pkl` — categorical feature mappings used by the application
-
-## 📸 Application Screenshots
-
-Screenshots of the Streamlit application will be added to this section.
+---
 
 ## 🚀 Future Improvements
 
-Possible future improvements include:
+* Real-time flight information
+* Weather-data integration
+* SHAP-based model explainability
+* Online deployment
+* Automated model retraining
+* Prediction history and monitoring dashboard
 
-* Deploying the Streamlit application online.
-* Adding real-time flight information.
-* Integrating live weather information.
-* Improving categorical encoding for production use.
-* Performing additional hyperparameter optimization.
-* Adding more advanced model explainability.
-* Adding automated model retraining.
-* Creating a monitoring dashboard for model performance.
-
-## 💡 Key Learning Outcomes
-
-Through this project, I worked with:
-
-* Real-world data cleaning
-* Exploratory data analysis
-* SQL data analysis
-* Feature engineering
-* Classification algorithms
-* Imbalanced datasets
-* Model evaluation
-* Threshold optimization
-* XGBoost
-* Model serialization
-* Streamlit application development
-* End-to-end machine learning workflow
+---
 
 ## 👨‍💻 Author
 
 **Sankar**
 
-Student Data Science Project
+B.Tech Computer Science & Engineering Student
+
+Interested in **Data Science, Machine Learning, Artificial Intelligence, and Generative AI**.
 
 ---
 
-⭐ If you find this project useful, feel free to explore the notebooks and application code.
+⭐ **Flight Delay Prediction System — End-to-End Machine Learning Project**

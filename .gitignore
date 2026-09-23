@@ -1,0 +1,33 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual environments
+venv/
+.venv/
+env/
+ENV/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE settings
+.vscode/
+
+# Raw dataset/archive
+data/archive/
+data/archive.zip
+
+# Temporary sample script
+data/sample_flights.py
+
+# Duplicate SQL notebook
+sql/02_sql_analysis.ipynb

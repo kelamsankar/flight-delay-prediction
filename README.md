@@ -215,20 +215,14 @@ Decision Threshold: 55%
 
 ### Main Application
 
-![Main Application](screenshots/01_main_application.png)
+<img width="1366" height="619" alt="application" src="https://github.com/user-attachments/assets/fddc780d-b736-42cf-ade0-caf3db36951c" />
 
 ### Delayed Prediction
+<img width="1366" height="619" alt="delayed" src="https://github.com/user-attachments/assets/fab3436b-4fcb-4b37-9927-22a3b0f1c54f" />
 
-![Delayed Prediction](screenshots/02_delayed_prediction.png)
 
 ### Prediction Result
-
-![Prediction Result](screenshots/03_prediction.png)
-
-### Early Morning Prediction
-
-![Early Morning Prediction](screenshots/04_early_morning.png)
-
+<img width="1366" height="619" alt="not to be delayed" src="https://github.com/user-attachments/assets/39eccaad-1b17-4fff-9df8-094bbc4fb96d" />
 ---
 
 ## ▶️ Run the Project
